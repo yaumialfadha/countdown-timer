@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexible Countdown Timer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-image: url('https://images8.alphacoders.com/973/973575.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+        }
+        .timer {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .buttons, .inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button, input {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            width: 60px;
+            text-align: center;
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <h1>Flexible Countdown Timer</h1>
+    <div class="timer" id="display">00:00</div>
+
+    <div class="inputs">
+        <label for="workMinutes">Work (minutes):</label>
+        <input type="number" id="workMinutes" min="1" placeholder="30">
+    </div>
+    
+    <div class="inputs">
+        <label for="studyMinutes">Study (minutes):</label>
+        <input type="number" id="studyMinutes" min="1" placeholder="20">
+    </div>
+
+    <div class="buttons">
+        <button onclick="startCustomTimer('work')">Start Work Timer</button>
+        <button onclick="startCustomTimer('study')">Start Study Timer</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <!-- YouTube Audio (Autoplay, Loop) -->
+    <iframe id="youtubeAudio" width="0" height="0" 
+        src="https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I" 
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+
+    <script>
+        let countdown;
+        let timeRemaining;
+        let isPaused = false;
+        let timeElapsedBeforePause = 0; // Track time elapsed before pause
+
+        function startCustomTimer(type) {
+            clearInterval(countdown);  // Stop any existing timer
+
+            let minutes;
+            if (type === 'work') {
+                minutes = document.getElementById('workMinutes').value || 30; // Default to 30 if input is empty
+            } else if (type === 'study') {
+                minutes = document.getElementById('studyMinutes').value || 20; // Default to 20 if input is empty
+            }
+
+            timeRemaining = minutes * 60 * 1000; // Convert minutes to milliseconds
+            timeElapsedBeforePause = 0; // Reset the time elapsed before pause when timer starts
+
+            // Start playing music when timer starts (YouTube video is already autoplaying)
+            document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
+
+            countdown = setInterval(() => {
+                if (!isPaused) {
+                    timeRemaining -= 1000; // Decrease time by 1 second
+
+                    const minutesLeft = Math.floor((timeRemaining / 1000) / 60);
+                    const secondsLeft = Math.floor((timeRemaining / 1000) % 60);
+
+                    document.getElementById('display').textContent =
+                        `${minutesLeft.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`;
+
+                    if (timeRemaining <= 0) {
+                        clearInterval(countdown);
+                        document.getElementById('display').textContent = "Time's up!";
+                    }
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(countdown);
+            document.getElementById('display').textContent = "00:00";
+            // Reset YouTube audio by changing the src attribute
+            document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
+            isPaused = false; // Reset pause flag
+        }
+
+    </script>
+</body>
+</html>
