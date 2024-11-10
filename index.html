@@ -67,9 +67,10 @@
     </div>
 
     <!-- YouTube Audio (Autoplay, Loop) -->
-    <iframe id="youtubeAudio" width="0" height="0" 
-        src="https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I" 
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    <iframe src="https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen>
     </iframe>
 
     <script>
@@ -92,7 +93,7 @@
             timeElapsedBeforePause = 0; // Reset the time elapsed before pause when timer starts
 
             // Start playing music when timer starts (YouTube video is already autoplaying)
-            document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
+            // document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
 
             countdown = setInterval(() => {
                 if (!isPaused) {
@@ -116,7 +117,7 @@
             clearInterval(countdown);
             document.getElementById('display').textContent = "00:00";
             // Reset YouTube audio by changing the src attribute
-            document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
+            // document.getElementById('youtubeAudio').src = "https://www.youtube.com/embed/AZals4U6Z_I?autoplay=1&loop=1&playlist=AZals4U6Z_I";
             isPaused = false; // Reset pause flag
         }
 
